@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Modal,
   Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 import {
   AntDesign,
@@ -37,17 +36,13 @@ export function UserDetails(props) {
   const [user_token, setToken] = useState();
   const [confirm_email_modal, set_confirm_email_modal] = useState(false);
   const [update_email_modal, set_update_email_modal] = useState(false);
-
-  // modals states
   const [up_modal, setUp_modal] = useState(false);
   const [otp_modal, setOtpModal] = useState(false);
+
   // use effect
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => setToken(token));
   });
-  //check
-  console.log("id is ", data.id, "token :", user_token);
-  // do it afte useEffect
   useEffect(() => {
     setEmail(data.email);
     setPhone(data.phone.toString());
@@ -55,7 +50,11 @@ export function UserDetails(props) {
     setId(data.id);
   }, [data]);
 
-  //  make a view to handel sendiing email otp to the user
+  //check
+  console.log("id is ", data.id, "token :", user_token);
+
+  // functions
+  //    -----OTP--------
   function set_otp() {
     set_confirm_email_modal(false);
     AsyncStorage.getItem("token").then((token) => {
@@ -73,7 +72,6 @@ export function UserDetails(props) {
         .catch((e) => console.log(e));
     });
   }
-  // functions
   function triger_check(OTP) {
     if (OTP.length === 4) {
       setThemeColor("skyblue");
@@ -97,7 +95,6 @@ export function UserDetails(props) {
       setMessage(t("email_not_verified"));
     }
   }
-
   function verfiy(OTP, email) {
     let payload = {
       email: email,
@@ -118,13 +115,11 @@ export function UserDetails(props) {
         handle_data(data);
       });
   }
-  // UPDATE USER AND PHONE FUNCTIONS
+  // --------------------user and phone-----------
   function back_to_Profile() {
     props.navigation.dispatch(StackActions.pop());
     props.navigation.dispatch(StackActions.replace("profileScreen"));
   }
-
-  // sending the u-p upate request
   function send_up_https_request(token) {
     const payload = new FormData();
     payload.append("username", username);
@@ -144,13 +139,11 @@ export function UserDetails(props) {
     props.navigation.dispatch(StackActions.pop());
     props.navigation.dispatch(StackActions.replace("profileScreen"));
   }
-
-  // handeling the u-p press
   function update_up() {
     console.log(id, "this is hat we sat");
     AsyncStorage.getItem("token").then(send_up_https_request);
   }
-
+  // -----------email-----------------------
   function update_email() {
     const email_ep = `https://www.baity.uk/owners/update/email/${id}/`;
     const payload = new FormData();
