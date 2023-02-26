@@ -45,6 +45,9 @@ export const arabic = {
     new_passowrd: "كلمة السر الحالية",
     email_verified: "تم التحقق من البريد الإلكتروني بنجاح",
     email_not_verified: "رمز تحقق خاطئ",
+    cancel_message: "إلغاء",
+    edit_message: "تعديل",
+    confrim_email_edit: "هل أنت متأكد أنك تريد تعديل بريدك الإلكتروني",
     //   house form
     house_address: "عنوان المنزل",
     price: "السعر",

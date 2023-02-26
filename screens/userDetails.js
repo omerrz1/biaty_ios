@@ -35,6 +35,8 @@ export function UserDetails(props) {
   const [themecolor, setThemeColor] = useState("black");
   const [message, setMessage] = useState(t("start_message"));
   const [user_token, setToken] = useState();
+  const [confirm_email_modal, set_confirm_email_modal] = useState(false);
+  const [update_email_modal, set_update_email_modal] = useState(false);
 
   // modals states
   const [up_modal, setUp_modal] = useState(false);
@@ -55,6 +57,7 @@ export function UserDetails(props) {
 
   //  make a view to handel sendiing email otp to the user
   function set_otp() {
+    set_confirm_email_modal(false);
     AsyncStorage.getItem("token").then((token) => {
       fetch("https://www.baity.uk/owners/verify-email/", {
         method: "GET",
@@ -84,7 +87,10 @@ export function UserDetails(props) {
   function handle_data(data) {
     if (data.account === "verfied") {
       setThemeColor("lightgreen");
+
       setMessage(t("email_verified"));
+      setOtpModal(false);
+      set_update_email_modal(true);
       //ask the user to use his details to login
     } else {
       setThemeColor("red");
@@ -157,6 +163,7 @@ export function UserDetails(props) {
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
+    back_to_Profile();
   }
   return (
     <ImageBackground
@@ -206,7 +213,10 @@ export function UserDetails(props) {
             <MaterialCommunityIcons name="email" size={54} color="black" />
           </View>
 
-          <TouchableOpacity onPress={set_otp} style={styles.section}>
+          <TouchableOpacity
+            onPress={() => set_confirm_email_modal(true)}
+            style={styles.section}
+          >
             <Feather size="20" name="edit" />
             <MaterialCommunityIcons
               name="email-outline"
@@ -233,7 +243,7 @@ export function UserDetails(props) {
             <Feather size="20" name="edit" />
             <SimpleLineIcons name="lock" size={24} color="black" />
             <View style={{ ...styles.input, alignItems: "center" }}>
-              <Text>********</Text>
+              <Text>****************</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -337,7 +347,11 @@ export function UserDetails(props) {
           </View>
         </Modal>
         {/* update email modal */}
-        <Modal visible={true} animationType="slide" transparent={true}>
+        <Modal
+          visible={update_email_modal}
+          animationType="slide"
+          transparent={true}
+        >
           <View style={{ ...styles.u_p_container, top: "10%" }}>
             <ImageBackground
               style={{ flex: 1, width: "100%" }}
@@ -351,7 +365,8 @@ export function UserDetails(props) {
                   alignItems: "center",
                 }}
               >
-                <View style={styles.section}>
+                <Feather size="60" name="edit" />
+                <View style={{ ...styles.section, marginTop: "20%" }}>
                   <AntDesign size="30" name="mail" />
                   <TextInput
                     value={email}
@@ -377,6 +392,34 @@ export function UserDetails(props) {
                 </TouchableOpacity>
               </View>
             </ImageBackground>
+          </View>
+        </Modal>
+        {/* confirm modal */}
+        <Modal
+          animationType="slide"
+          visible={confirm_email_modal}
+          transparent={true}
+        >
+          <View style={styles.confirm_email}>
+            <Text>{t("confrim_email_edit")}</Text>
+            <View style={styles.email_options}>
+              <TouchableOpacity
+                onPress={set_otp}
+                style={{ ...styles.button, backgroundColor: "skyblue" }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>
+                  {t("edit_message")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => set_confirm_email_modal(false)}
+                style={{ ...styles.button, backgroundColor: "salmon" }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>
+                  {t("cancel_message")}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       </ScrollView>
@@ -437,6 +480,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     paddingTop: "40%",
+  },
+  confirm_email: {
+    flex: 0.3,
+    backgroundColor: "white",
+    width: "80%",
+    alignSelf: "center",
+    borderWidth: 1,
+    top: "10%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "20%",
+    borderColor: "skyblue",
+    shadowOffset: { height: 0, width: 0 },
+    shadowColor: "skyblue",
+    shadowOpacity: 1,
+    shadowRadius: 20,
+  },
+  email_options: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-around",
+    marginTop: "30%",
+  },
+  button: {
+    width: "30%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "3%",
+    borderRadius: "10%",
   },
   section: {
     flexDirection: "row",

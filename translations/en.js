@@ -46,6 +46,9 @@ export const english = {
     new_passowrd: "new passowrd",
     email_verified: "email verfied succefully",
     email_not_verified: "wrong Code!",
+    cancel_message: "cancel",
+    edit_message: "Edit",
+    confrim_email_edit: "are you sure your want to edit you email?",
 
     // house form
     house_address: "house address",
