@@ -27,6 +27,7 @@ export function UserDetails(props) {
   const { t } = useTranslation();
   const [data, setdata] = useState(props.route.params.data[0]);
   const [email, setEmail] = useState();
+  const [delete_confrim, setdelete_confrim] = useState(false);
   const [username, setUsername] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
@@ -54,6 +55,12 @@ export function UserDetails(props) {
   console.log("id is ", data.id, "token :", user_token);
 
   // functions
+  // ------------general -------------
+  function log_out() {
+    AsyncStorage.removeItem("token");
+    props.navigation.dispatch(StackActions.replace("splash"));
+  }
+
   //    -----OTP--------
   function set_otp() {
     set_confirm_email_modal(false);
@@ -158,6 +165,20 @@ export function UserDetails(props) {
       .catch((e) => console.log(e));
     back_to_Profile();
   }
+
+  // -------------delete account--------------
+  function delete_me() {
+    fetch("https://www.baity.uk/owners/deleteme/", {
+      method: "GET",
+      headers: {
+        Authorization: `token ${user_token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+    log_out();
+  }
   return (
     <ImageBackground
       style={styles.background}
@@ -167,12 +188,7 @@ export function UserDetails(props) {
         onPress={back_to_Profile}
         style={styles.backbuttoncontainer}
       >
-        <Ionicons
-          style={{}}
-          name="arrow-back-circle"
-          size={30}
-          color="skyblue"
-        />
+        <Ionicons name="arrow-back-circle" size={30} color="skyblue" />
         <Text style={{ color: "skyblue", fontWeight: "bold" }}>profile</Text>
       </TouchableOpacity>
       <ScrollView style={{ flex: 1, width: "100%" }}>
@@ -241,9 +257,16 @@ export function UserDetails(props) {
           </TouchableOpacity>
         </View>
         {/* dlete account button */}
-        <TouchableOpacity>
-          <Text>DELETE ACCOUNT</Text>
-        </TouchableOpacity>
+        <View style={styles.delete_section}>
+          <TouchableOpacity
+            onPress={() => setdelete_confrim(true)}
+            style={styles.delete_button}
+          >
+            <Text style={{ color: "white", fontWeight: "bold" }}>
+              DELETE ACCOUNT
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         {/* update usern and phone modal */}
 
@@ -415,6 +438,37 @@ export function UserDetails(props) {
             </View>
           </View>
         </Modal>
+        {/* delete confirm modal */}
+        <Modal
+          animationType="slide"
+          visible={delete_confrim}
+          transparent={true}
+        >
+          <View style={styles.confirm_email}>
+            <Entypo name="emoji-sad" size={44} color="hotpink" />
+            <Text style={{ marginHorizontal: "5%", marginTop: "10%" }}>
+              {t("delete_message")}
+            </Text>
+            <View style={styles.email_options}>
+              <TouchableOpacity
+                onPress={() => setdelete_confrim(false)}
+                style={{ ...styles.button, backgroundColor: "skyblue" }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>
+                  {t("cancel_message")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={delete_me}
+                style={{ ...styles.button, backgroundColor: "hotpink" }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>
+                  {t("confirm")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </ImageBackground>
   );
@@ -550,5 +604,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-start",
     zIndex: "10%",
+  },
+  delete_section: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: "20%",
+    marginBottom: "25%",
+  },
+  delete_button: {
+    backgroundColor: "hotpink",
+    padding: "5%",
+    borderColor: "hotpink",
+    borderWidth: 2,
+    borderRadius: "10%",
+    shadowOffset: { height: 0, width: 0 },
+    shadowColor: "grey",
+    shadowRadius: 10,
+    shadowOpacity: 1,
   },
 });

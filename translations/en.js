@@ -49,7 +49,9 @@ export const english = {
     cancel_message: "cancel",
     edit_message: "Edit",
     confrim_email_edit: "are you sure your want to edit you email?",
-
+    delete_message:
+      "are you sure you want to delete your account, this acion can not be undone ",
+    confirm: "confirm",
     // house form
     house_address: "house address",
     price: "price",

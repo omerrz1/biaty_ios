@@ -48,6 +48,10 @@ export const arabic = {
     cancel_message: "إلغاء",
     edit_message: "تعديل",
     confrim_email_edit: "هل أنت متأكد أنك تريد تعديل بريدك الإلكتروني",
+    delete_message:
+      "هل انت متأكد انك تريد حذف حسابك ؟ لا يمكن التراجع عن هذا الإجراء",
+    confirm: "تأكيد",
+
     //   house form
     house_address: "عنوان المنزل",
     price: "السعر",
