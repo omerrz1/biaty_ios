@@ -51,7 +51,10 @@ export const arabic = {
     delete_message:
       "هل انت متأكد انك تريد حذف حسابك ؟ لا يمكن التراجع عن هذا الإجراء",
     confirm: "تأكيد",
-
+    wrong_password: "كلمة مرور خاطئة !",
+    password_not_matched: "كلمة المرور غير مطابقة !",
+    email_used: "هذا البريد الإلكتروني لديه حساب آخر",
+    invald_email: "عنوان البريد الإلكتروني غير صالح",
     //   house form
     house_address: "عنوان المنزل",
     price: "السعر",

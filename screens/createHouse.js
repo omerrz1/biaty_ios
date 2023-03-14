@@ -9,7 +9,6 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as imagePicker from "expo-image-picker";

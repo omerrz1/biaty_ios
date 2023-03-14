@@ -39,6 +39,8 @@ export function UserDetails(props) {
   const [update_email_modal, set_update_email_modal] = useState(false);
   const [up_modal, setUp_modal] = useState(false);
   const [otp_modal, setOtpModal] = useState(false);
+  const [email_message, set_email_message] = useState("none");
+  const [email_label, set_email_label] = useState();
 
   // use effect
   useEffect(() => {
@@ -59,6 +61,9 @@ export function UserDetails(props) {
   function log_out() {
     AsyncStorage.removeItem("token");
     props.navigation.dispatch(StackActions.replace("splash"));
+  }
+  function change_password() {
+    props.navigation.navigate("change-password", { email: email });
   }
 
   //    -----OTP--------
@@ -160,10 +165,25 @@ export function UserDetails(props) {
       body: payload,
       headers: { Authorization: `token ${user_token}` },
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((response) => {
+        console.log("status code of the email request:", response.status);
+        if (response.status == 400) {
+          set_email_message("visible");
+          return response.json();
+        } else {
+          back_to_Profile();
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.email == "Enter a valid email address.") {
+          set_email_label(t("invald_email"));
+        } else if (data.email == "owner with this email already exists.") {
+          set_email_label(t("email_used"));
+        }
+      })
       .catch((e) => console.log(e));
-    back_to_Profile();
   }
 
   // -------------delete account--------------
@@ -248,7 +268,10 @@ export function UserDetails(props) {
             <MaterialCommunityIcons name="lock" size={54} color="black" />
           </View>
 
-          <TouchableOpacity style={{ ...styles.section, marginBottom: "80%" }}>
+          <TouchableOpacity
+            onPress={change_password}
+            style={{ ...styles.section, marginBottom: "80%" }}
+          >
             <Feather size="20" name="edit" />
             <SimpleLineIcons name="lock" size={24} color="black" />
             <View style={{ ...styles.input, alignItems: "center" }}>
@@ -382,6 +405,17 @@ export function UserDetails(props) {
                 }}
               >
                 <Feather size="60" name="edit" />
+
+                <Text
+                  style={{
+                    color: "red",
+                    fontWeight: "bold",
+                    marginTop: "5%",
+                    display: email_message,
+                  }}
+                >
+                  {email_label}
+                </Text>
                 <View style={{ ...styles.section, marginTop: "20%" }}>
                   <AntDesign size="30" name="mail" />
                   <TextInput

@@ -117,7 +117,14 @@ export function Profile(props) {
       source={require("../assets/homeBG.png")}
     >
       <ScrollView
-        refreshControl={<RefreshControl onRefresh={() => get_profile(token)} />}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => {
+              get_houses();
+              get_profile(token);
+            }}
+          />
+        }
         scrollEnabled={true}
         nestedScrollEnabled={true}
         style={{ flex: 1, width: "100%" }}

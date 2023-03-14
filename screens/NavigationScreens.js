@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Profile } from "../screens/profile";
 import { MyHouses } from "./MyHouses";
 import { UserDetails } from "./userDetails";
+import { ChangePassword } from "./changePasswod";
 
 function search_icon({ focused }) {
   return (
@@ -250,6 +251,11 @@ export function ProfileNavigation(props) {
       <Screen
         name="details"
         component={UserDetails}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
+      <Screen
+        name="change-password"
+        component={ChangePassword}
         options={{ gestureEnabled: false, headerShown: false }}
       />
     </Navigator>

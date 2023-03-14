@@ -51,7 +51,11 @@ export const english = {
     confrim_email_edit: "are you sure your want to edit you email?",
     delete_message:
       "are you sure you want to delete your account, this acion can not be undone ",
+    wrong_password: "wrong password!",
     confirm: "confirm",
+    password_not_matched: "passwords do not match !",
+    email_used: "a user witth this email already exists",
+    invald_email: "email address is not valid",
     // house form
     house_address: "house address",
     price: "price",
