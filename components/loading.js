@@ -7,14 +7,15 @@ export function Loading (props){
     return(
         <View style={{flex:1, width:'100%',alignItems:'center',justifyContent:'center'}}>
         <LottieView
-        autoPlay
+          autoPlay
         style={{
           width: props.width,
           height: props.height,
         }}
         // Find more Lottie files at https://lottiefiles.com/featured
-        source={require('../animations/networkAnimation.json')}
+        source={require('../animations/loading_login.json')}
       />
       </View>
     )
 }
+

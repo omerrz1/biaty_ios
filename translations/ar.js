@@ -55,6 +55,7 @@ export const arabic = {
     password_not_matched: "كلمة المرور غير مطابقة !",
     email_used: "هذا البريد الإلكتروني لديه حساب آخر",
     invald_email: "عنوان البريد الإلكتروني غير صالح",
+    password_changed: "تم تغيير كلمة المرور بنجاح",
     //   house form
     house_address: "عنوان المنزل",
     price: "السعر",
@@ -63,5 +64,6 @@ export const arabic = {
     bathrooms: "الحمامات",
     livingrooms: "غرف المعيشة",
     bedrooms: "غرف نوم",
+    add_photos:'إضافة صور المنزل',
   },
 };

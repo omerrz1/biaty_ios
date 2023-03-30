@@ -50,12 +50,13 @@ export const english = {
     edit_message: "Edit",
     confrim_email_edit: "are you sure your want to edit you email?",
     delete_message:
-      "are you sure you want to delete your account, this acion can not be undone ",
+      "are you sure you want to delete your account, this action can not be undone ",
     wrong_password: "wrong password!",
     confirm: "confirm",
     password_not_matched: "passwords do not match !",
     email_used: "a user witth this email already exists",
     invald_email: "email address is not valid",
+    password_changed: "Password has been changed successfully",
     // house form
     house_address: "house address",
     price: "price",
@@ -64,5 +65,6 @@ export const english = {
     bathrooms: "bath rooms",
     livingrooms: "living rooms",
     bedrooms: "bed rooms",
+    add_photos:'add house photos',
   },
 };

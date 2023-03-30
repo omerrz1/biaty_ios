@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Loading } from "../components/loading";
 
 export function HouseIMages(props) {
   const { t } = useTranslation();
@@ -80,6 +81,8 @@ export function HouseIMages(props) {
         .then((response) => response.json())
         .then((data) => console.log("successfully uloaded image ", data));
     }
+    props.navigation.dispatch(StackActions.pop());
+    props.navigation.dispatch(StackActions.replace("form"));
     props.navigation.navigate("home");
   }
 
@@ -148,13 +151,16 @@ export function HouseIMages(props) {
 
 export function HouseForm(props) {
   const { t } = useTranslation();
-  const [address, SetAddress] = useState();
-  const [price, SetPrice] = useState();
-  const [area, SetArea] = useState();
-  const [description, SetDescription] = useState();
-  const [bath_rooms, SetBath_rooms] = useState();
-  const [bed_rooms, SetBed_rooms] = useState();
-  const [living_rooms, SetLiving_rooms] = useState();
+  const [address, SetAddress] = useState('');
+  const [price, SetPrice] = useState(0);
+  const [area, SetArea] = useState(0);
+  const [description, SetDescription] = useState('');
+  const [bath_rooms, SetBath_rooms] = useState(0);
+  const [bed_rooms, SetBed_rooms] = useState(0);
+  const [living_rooms, SetLiving_rooms] = useState(0);
+  const [loading, set_loading] = useState('none')
+  const [add_photos_Button, set_add_photos_Button] = useState('visible')
+  const [place_holder_color, set_place_holder_color] = useState('grey')
 
   function postHouse() {
     const house = new FormData();
@@ -170,20 +176,29 @@ export function HouseForm(props) {
 
     const ep = "https://www.baity.uk/house/create/";
     AsyncStorage.getItem("token").then(create_houes);
-
     function create_houes(token) {
-      fetch(ep, {
-        method: "POST",
-        body: house,
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
-        .then((Response) => Response.json())
-        .then((data) => {
-          console.log(data);
-          props.navigation.navigate("images", { house_id: data.id });
-        });
+      if (address.trim() === '' || price === 0 || area === 0 || description.trim() === '') {
+        set_place_holder_color('red')
+      } 
+      else {
+        set_add_photos_Button('none')
+        set_loading('visble')
+        fetch(ep, {
+          method: "POST",
+          body: house,
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        })
+          .then((Response) => Response.json())
+          .then((data) => {
+            set_add_photos_Button('visible')
+            set_loading('none')
+            console.log(data);
+            props.navigation.navigate("images", { house_id: data.id });
+          });
+      }
+    
     }
   }
 
@@ -207,6 +222,7 @@ export function HouseForm(props) {
           <View style={{ flexDirection: "row", marginBottom: 20 }}>
             <Entypo style={{ marginTop: 10 }} size={25} name="location" />
             <TextInput
+              placeholderTextColor={place_holder_color}
               style={styles.input}
               onChangeText={SetAddress}
               placeholder={t("house_address")}
@@ -221,6 +237,7 @@ export function HouseForm(props) {
             />
             <TextInput
               keyboardType="numeric"
+              placeholderTextColor={place_holder_color}
               onChangeText={SetPrice}
               style={styles.small_input}
               placeholder={t("price")}
@@ -233,6 +250,7 @@ export function HouseForm(props) {
             />
             <TextInput
               keyboardType="numeric"
+              placeholderTextColor={place_holder_color}
               onChangeText={SetArea}
               style={styles.small_input}
               placeholder={t("house_area")}
@@ -242,6 +260,7 @@ export function HouseForm(props) {
           <View style={{ flexDirection: "row", marginBottom: 20 }}>
             <Foundation name="comment-quotes" size={30} />
             <TextInput
+              placeholderTextColor={place_holder_color}
               style={styles.input}
               onChangeText={SetDescription}
               placeholder={t("house_description")}
@@ -257,6 +276,7 @@ export function HouseForm(props) {
                   style={styles.NumericInputStyle}
                   totalHeight={40}
                   totalWidth={80}
+                  minValue={0}
                   rightButtonBackgroundColor="black"
                   leftButtonBackgroundColor="black"
                   iconStyle={{ color: "white" }}
@@ -277,6 +297,7 @@ export function HouseForm(props) {
                   onChange={SetBed_rooms}
                   totalHeight={40}
                   totalWidth={80}
+                  minValue={0}
                   rightButtonBackgroundColor="black"
                   leftButtonBackgroundColor="black"
                   iconStyle={{ color: "white" }}
@@ -298,6 +319,7 @@ export function HouseForm(props) {
                   style={styles.NumericInputStyle}
                   totalHeight={40}
                   totalWidth={80}
+                  minValue={0}
                   rightButtonBackgroundColor="black"
                   leftButtonBackgroundColor="black"
                   iconStyle={{ color: "white" }}
@@ -305,8 +327,9 @@ export function HouseForm(props) {
                 />
               </View>
             </View>
-            <TouchableOpacity onPress={postHouse} style={styles.Button}>
-              <Text style={{ color: "white" }}>add photos</Text>
+            <View style={{display:loading,height:'20%'}}><Loading height={50}/></View>
+            <TouchableOpacity onPress={postHouse} style={{...styles.Button, display:add_photos_Button}}>
+              <Text style={{ color: "white" }}>{t('add_photos') }</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -24,8 +24,8 @@ export function HouseCard(props){
                 )}
                 </View>
             </ScrollView>
-            
-            <TouchableOpacity>
+            {/* {on press we will just print the house object } */}
+            <TouchableOpacity onPress={()=>console.log('house pressed now : ',props.house)} >
             <View style={{top:5, padding:15,alignItems:'center', alignSelf:'center'}}>
                 <View style={{flexDirection:'row',alignItems:'center', justifyContent:'center'}}>
                     <Entypo style={{marginTop:10}} size={25} name = 'location'/>

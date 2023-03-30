@@ -22,7 +22,7 @@ import { ChangePassword } from "./screens/changePasswod";
 export default function App() {
   return (
     <View style={styles.container}>
-      <AuthNavigation />
+      <AuthNavigation/>
     </View>
   );
 }
@@ -31,4 +31,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
 });

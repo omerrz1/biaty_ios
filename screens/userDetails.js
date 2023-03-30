@@ -27,6 +27,7 @@ export function UserDetails(props) {
   const { t } = useTranslation();
   const [data, setdata] = useState(props.route.params.data[0]);
   const [email, setEmail] = useState();
+  const [new_email, set_new_Email] = useState();
   const [delete_confrim, setdelete_confrim] = useState(false);
   const [username, setUsername] = useState();
   const [phone, setPhone] = useState();
@@ -67,23 +68,6 @@ export function UserDetails(props) {
   }
 
   //    -----OTP--------
-  function set_otp() {
-    set_confirm_email_modal(false);
-    AsyncStorage.getItem("token").then((token) => {
-      fetch("https://www.baity.uk/owners/verify-email/", {
-        method: "GET",
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setOtpModal(true);
-        })
-        .catch((e) => console.log(e));
-    });
-  }
   function triger_check(OTP) {
     if (OTP.length === 4) {
       setThemeColor("skyblue");
@@ -97,10 +81,10 @@ export function UserDetails(props) {
   function handle_data(data) {
     if (data.account === "verfied") {
       setThemeColor("lightgreen");
-
       setMessage(t("email_verified"));
+      update_email()
       setOtpModal(false);
-      set_update_email_modal(true);
+      back_to_Profile()
       //ask the user to use his details to login
     } else {
       setThemeColor("red");
@@ -156,10 +140,48 @@ export function UserDetails(props) {
     AsyncStorage.getItem("token").then(send_up_https_request);
   }
   // -----------email-----------------------
+
+
+
+
+// verify new email 
+  function verify_new_email() {
+    const new_email_ep = `https://www.baity.uk/owners/new-email/`
+    const payload = new FormData();
+    payload.append("email", new_email );
+    fetch(new_email_ep, {
+      method: "POST",
+      body: payload,
+      headers: { Authorization: `token ${user_token}` },
+    })
+      .then((response) => {
+        console.log("status code of the email request:", response.status);
+        if (response.status == 400) {
+          set_email_message("visible");
+          return response.json();
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        console.log(data.email)
+        if (data.email == "Enter a valid email address.") {
+          set_email_label(t("invald_email"));
+        } else if (data.email == "owner with this email already exists.") {
+          set_email_label(t("email_used"));
+        } else if (data.email == "sent") {
+          set_update_email_modal(false)
+          setOtpModal(true)
+        }
+      })
+      .catch((e) => console.log(e));
+    // end
+  }
   function update_email() {
     const email_ep = `https://www.baity.uk/owners/update/email/${id}/`;
     const payload = new FormData();
-    payload.append("email", email);
+    payload.append("email", new_email);
     fetch(email_ep, {
       method: "PUT",
       body: payload,
@@ -171,7 +193,6 @@ export function UserDetails(props) {
           set_email_message("visible");
           return response.json();
         } else {
-          back_to_Profile();
           return response.json();
         }
       })
@@ -181,6 +202,8 @@ export function UserDetails(props) {
           set_email_label(t("invald_email"));
         } else if (data.email == "owner with this email already exists.") {
           set_email_label(t("email_used"));
+        }else if (data.email == "sent") {
+          setOtpModal(true)
         }
       })
       .catch((e) => console.log(e));
@@ -389,8 +412,8 @@ export function UserDetails(props) {
         <Modal
           visible={update_email_modal}
           animationType="slide"
-          transparent={true}
-        >
+          transparent={true}>
+          
           <View style={{ ...styles.u_p_container, top: "10%" }}>
             <ImageBackground
               style={{ flex: 1, width: "100%" }}
@@ -419,14 +442,15 @@ export function UserDetails(props) {
                 <View style={{ ...styles.section, marginTop: "20%" }}>
                   <AntDesign size="30" name="mail" />
                   <TextInput
-                    value={email}
-                    onChangeText={setEmail}
+                    placeholder=" new email@example.com"
+                    placeholderTextColor='black'
+                    onChangeText={set_new_Email}
                     textAlign="center"
                     style={styles.input}
                   />
                 </View>
                 <TouchableOpacity
-                  onPress={update_email}
+                  onPress={verify_new_email}
                   style={{
                     backgroundColor: "skyblue",
                     padding: "2%",
@@ -438,6 +462,22 @@ export function UserDetails(props) {
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
                     save
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={()=> set_update_email_modal(false)}
+                  style={{
+                    backgroundColor: "hotpink",
+                    padding: "2%",
+                    width: "30%",
+                    alignItems: "center",
+                    marginTop:'5%',
+                    justifyContent: "center",
+                    borderRadius: "10%",
+                  }}
+                >
+                  <Text style={{ color: "white", fontWeight: "bold" }}>
+                    {t('cancel_message')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -454,7 +494,10 @@ export function UserDetails(props) {
             <Text>{t("confrim_email_edit")}</Text>
             <View style={styles.email_options}>
               <TouchableOpacity
-                onPress={set_otp}
+                onPress={() => {
+                  set_confirm_email_modal(false)
+                  set_update_email_modal(true)
+                }} // open the email change and then confirm
                 style={{ ...styles.button, backgroundColor: "skyblue" }}
               >
                 <Text style={{ fontWeight: "bold", color: "white" }}>
@@ -516,6 +559,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: "10%",
   },
   otp_content: {
     flex: 0.8,
@@ -554,13 +598,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   container: {
-    flex: 1,
-    top: "10%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    paddingTop: "40%",
+    marginTop: "30%",
   },
   confirm_email: {
     flex: 0.3,

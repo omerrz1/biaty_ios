@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ImageBackground,
   Text,
@@ -6,23 +6,31 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Modal,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  AntDesign,
+} from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StackActions } from "@react-navigation/native";
 export function ChangePassword(props) {
   const { t } = useTranslation();
   // states
   const [current_password, set_curret_password] = useState();
   const [new_password, set_new_password] = useState();
   const [confirm_new_password, set_confrim_new_password] = useState();
-  const [states_code, set_status_code] = useState(400);
+  const [states_code, set_status_code] = useState();
+  const [confirm_modal, set_confirm_modal] = useState(false);
   // messages labels
   const [wrong_password_messaeg, set_wrong_password_messaeg] = useState("none");
   const [password_not_match, set_password_not_match] = useState("none");
   const [use_stronger_password, set_use_stronger_password] = useState("none");
-
+  // useEffects
+  useEffect(main_check, [states_code]);
   // functions
   // pasword check
   function isStrongPassword(password) {
@@ -65,6 +73,7 @@ export function ChangePassword(props) {
     return false;
   }
   function authenticate() {
+    console.log("function called");
     const payload = new FormData();
     payload.append("username", props.route.params.email);
     payload.append("password", current_password);
@@ -87,11 +96,12 @@ export function ChangePassword(props) {
       .then((data) => console.log(data));
   }
   function main_check() {
-    authenticate();
     if (states_code == 200) {
+      // the problem is here
+      set_status_code(0);
       let match = password_match();
       let strong = isStrongPassword(new_password);
-      console.log(match, strong);
+      console.log("match is :", match, "strong is :", strong);
       if (states_code == 200 && match && strong) {
         const payload = new FormData();
         payload.append("password", new_password);
@@ -105,7 +115,10 @@ export function ChangePassword(props) {
             },
           })
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+              console.log(data);
+              set_confirm_modal(true);
+            });
         });
       }
     }
@@ -117,6 +130,26 @@ export function ChangePassword(props) {
     >
       <KeyboardAwareScrollView extraHeight={100}>
         <View style={styles.container}>
+          {/* back button */}
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.dispatch(StackActions.pop());
+              props.navigation.dispatch(StackActions.replace("profileScreen"));
+            }}
+            style={{
+              position: "absolute",
+              top: "15%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              left: "5%",
+            }}
+          >
+            <Ionicons name="arrow-back-circle" size={30} color="skyblue" />
+            <Text style={{ color: "skyblue", fontWeight: "bold" }}>
+              profile
+            </Text>
+          </TouchableOpacity>
           {/* curent pasword section */}
           <Text style={{ color: "red", display: wrong_password_messaeg }}>
             {t("wrong_password")}
@@ -164,9 +197,32 @@ export function ChangePassword(props) {
             />
           </View>
           {/* change button */}
-          <TouchableOpacity onPress={main_check} style={styles.button}>
+          <TouchableOpacity onPress={authenticate} style={styles.button}>
             <Text style={{ color: "white", fontWeight: "bold" }}>Change</Text>
           </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={confirm_modal}
+          >
+            <View style={styles.Modal_confirm_container}>
+              <AntDesign name="Safety" size={54} color="lightgreen" />
+              <Text style={{ color: "green", fontWeight: "bold" }}>
+                {t("password_changed")} !
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.dispatch(StackActions.pop());
+                  props.navigation.dispatch(
+                    StackActions.replace("profileScreen")
+                  );
+                  set_confirm_modal(false);
+                }}
+              >
+                <AntDesign name="checkcircle" size={54} color="skyblue" />
+              </TouchableOpacity>
+            </View>
+          </Modal>
         </View>
       </KeyboardAwareScrollView>
     </ImageBackground>
@@ -180,6 +236,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
+  },
+  Modal_confirm_container: {
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "white",
+    height: "30%",
+    marginLeft: "10%",
+    marginRight: "10%",
+    borderWidth: 1,
+    borderColor: "skyblue",
+    shadowOffset: { height: 0, width: 0 },
+    shadowColor: "skyblue",
+    shadowOpacity: 1,
+    textShadowRadius: 40,
+    top: "25%",
   },
   section: {
     flexDirection: "row",

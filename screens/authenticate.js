@@ -15,6 +15,7 @@ import { StackActions } from "@react-navigation/native";
 import "../translations/i18nconfig";
 import { useTranslation } from "react-i18next";
 import { get_user } from "../functions/functions";
+import { Loading } from "../components/loading";
 export function Auth(props) {
   const { t } = useTranslation();
 
@@ -36,8 +37,13 @@ export function Auth(props) {
   const [password, setPassword] = useState();
   const [message, setmessage] = useState();
   const [visisbilty, setVisibilty] = useState("none");
+  const [loading, setloading] = useState('none')
+  const [login_button_visiblity, set_login_button_visiblity] = useState('visible')
+
 
   function handle_response(response) {
+    set_login_button_visiblity('visible')
+    setloading('none')
     if (response.non_field_errors) {
       //if we get error message
       // we display it in read
@@ -60,7 +66,8 @@ export function Auth(props) {
     const payload = new FormData();
     payload.append("username", username);
     payload.append("password", password);
-
+    set_login_button_visiblity('none')
+    setloading('visible')
     const ep = "https://www.baity.uk/auth/";
     fetch(ep, {
       method: "POST",
@@ -109,10 +116,12 @@ export function Auth(props) {
             />
           </View>
 
-          <TouchableOpacity onPress={get_Token} style={styles.login_button}>
+          <TouchableOpacity onPress={get_Token} style={{...styles.login_button, display:login_button_visiblity}}>
             <Text style={styles.text}>{t("login_button_text")}</Text>
           </TouchableOpacity>
 
+          <View style={{display:loading,height:'30%'}}><Loading height={50} /></View>
+          
           <TouchableOpacity onPress={create_account} style={styles.options}>
             <Text style={styles.optionsText}>{t("create_account_text")}</Text>
           </TouchableOpacity>
@@ -153,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     borderWidth: 1,
-    top: "70%",
+    top: "60%",
     padding: 20,
     marginLeft: 15,
     marginRight: 15,
