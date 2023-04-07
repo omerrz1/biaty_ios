@@ -18,6 +18,7 @@ import { MyHouses } from "./screens/MyHouses";
 import { UserDetails } from "./screens/userDetails";
 import { Loading } from "./components/loading";
 import { ChangePassword } from "./screens/changePasswod";
+import { HouseDetails } from "./screens/houseDetails";
 
 export default function App() {
   return (

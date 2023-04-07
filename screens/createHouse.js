@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Loading } from "../components/loading";
-
+import SwitchSelector from "react-native-switch-selector";
 export function HouseIMages(props) {
   const { t } = useTranslation();
 
@@ -162,6 +162,11 @@ export function HouseForm(props) {
   const [add_photos_Button, set_add_photos_Button] = useState('visible')
   const [place_holder_color, set_place_holder_color] = useState('grey')
 
+  const options = [
+    { label: t("Rent"), value: "rent" },
+    { label: t("Sell"), value: "sell" },
+  ];
+
   function postHouse() {
     const house = new FormData();
 
@@ -208,9 +213,9 @@ export function HouseForm(props) {
       style={styles.background}
     >
       <KeyboardAwareScrollView
-        style={{ paddingTop: "55%" }}
+        style={{ paddingTop: "40%" }}
         bounces={true}
-        extraScrollHeight={200}
+        extraScrollHeight={400}
       >
         <View style={styles.container2}>
           <Text>POST HOUSE</Text>
@@ -266,7 +271,7 @@ export function HouseForm(props) {
               placeholder={t("house_description")}
             />
           </View>
-          <View>
+          <View style={styles.rooms}>
             <Text style={styles.iconText}>{t("bathrooms")}</Text>
             <View style={{ flexDirection: "row" }}>
               <FontAwesome5 style={styles.iconStyle} name="bath" size={30} />
@@ -326,6 +331,18 @@ export function HouseForm(props) {
                   rounded={true}
                 />
               </View>
+            </View>
+            <View style={styles.House_options}>
+             
+            <SwitchSelector
+              options={options}
+                initial={0}
+                onPress={value => console.log(`Call onPress with value: ${value}`)}
+                textColor='black'
+                selectedColor='white'
+                buttonColor='skyblue'
+                borderColor='skyblue'
+            />
             </View>
             <View style={{display:loading,height:'20%'}}><Loading height={50}/></View>
             <TouchableOpacity onPress={postHouse} style={{...styles.Button, display:add_photos_Button}}>
@@ -435,6 +452,12 @@ const styles = StyleSheet.create({
     right: "70%",
     color: "skyblue",
   },
+  rooms: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent:'center',
+    width:'100%'
+  },
   NumericInputStyle: {
     left: "90%",
   },
@@ -462,5 +485,10 @@ const styles = StyleSheet.create({
     marginTop: "13%",
     left: "5%",
     fontWeight: "800",
+  },
+  House_options: {
+    marginTop: 10,
+    width: '100%',
+    paddingBottom:10,
   },
 });
