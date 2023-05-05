@@ -27,14 +27,17 @@ export function HomePage(props) {
     >
       <View style={styles.feed_container}>
         <FlatList
-          style={{ padding: "3%", alignSelf: "center" }}
+
+          style={{alignSelf:'center',padding:5, paddingTop:'30%',zIndex:30}}
           data={houses}
           // keyExtractor={
           //     (item)=>item.id.toString()
           // }
           showsVerticalScrollIndicator={false}
+
           refreshControl={<RefreshControl onRefresh={get_houses} />}
           renderItem={({ item }) => <HouseCard house={item} />}
+          ListFooterComponent={<View style={{ height: 200 }} />}
         />
       </View>
     </ImageBackground>
@@ -48,9 +51,7 @@ const styles = StyleSheet.create({
   },
 
   feed_container: {
-    top: "13%",
     flex: 1,
     width: "100%",
-    paddingBottom: 165,
   },
 });

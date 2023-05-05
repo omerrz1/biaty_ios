@@ -15,8 +15,6 @@ const resources ={
 
 
 export function update_langugae(){
-
-
 AsyncStorage.getItem('language')
 .then(lan=>{
     let options={

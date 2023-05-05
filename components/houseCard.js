@@ -5,7 +5,8 @@ import { Entypo } from '@expo/vector-icons';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import '../translations/i18nconfig'
 import { useTranslation } from "react-i18next";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import SwitchSelector from 'react-native-switch-selector';
 
 
 
@@ -16,7 +17,6 @@ export function HouseCard(props){
     let photos = props.house.photos
     return(
         <View style={styles.card_container}>
-
             <ScrollView style={{height:'100%', flexDirection:'row',flex:1,width:"100%"}}  bounces={true} horizontal showsHorizontalScrollIndicator={false}>
                <View style={styles.photos_container}>
                 {photos.map(
@@ -25,7 +25,7 @@ export function HouseCard(props){
                 </View>
             </ScrollView>
             {/* {on press we will just print the house object } */}
-            <TouchableOpacity onPress={()=>console.log('house pressed now : ',props.house)} >
+            <TouchableOpacity onPress={()=> props.navigation.navigate("details", { house: props.house })} >
             <View style={{top:5, padding:15,alignItems:'center', alignSelf:'center'}}>
                 <View style={{flexDirection:'row',alignItems:'center', justifyContent:'center'}}>
                     <Entypo style={{marginTop:10}} size={25} name = 'location'/>
@@ -48,7 +48,6 @@ export function HouseCard(props){
                     <Text style={styles.text} > {props.house.living_rooms}</Text>
                 </View>
                 <Text style={{top:'30%', fontWeight:'bold'}}>{t('view_more')}</Text>
-
             </View>
             </TouchableOpacity>
         </View>
@@ -60,9 +59,8 @@ export function HouseCard(props){
 
 
 
-export function MyHouseCard(props){
-
-    const {t} = useTranslation()
+export function MyHouseCard(props) {
+    
 
     let photos = props.house.photos
     return(
@@ -102,7 +100,7 @@ export function MyHouseCard(props){
                 </View>
             </View>
             </TouchableOpacity>
-
+           
                     <View style={styles.options}>
                         <TouchableOpacity onPress={()=>props.OnEdit(props.house)} style={styles.editButton}>
                             <Text style={{color:'white', fontWeight:"bold"}}>
@@ -130,11 +128,10 @@ export function MyHouseCard(props){
 const styles = StyleSheet.create(
     {
         card_container:{
-            paddingTop:'1.6%',
+            paddingTop:'2%',
             marginBottom:'15%',
-            width:326,
+            width:310,
             borderWidth: 3,
-            paddingLeft:3,
             flex:1,
             alignItems:'center',
             justifyContent:'flex-start',
@@ -146,19 +143,20 @@ const styles = StyleSheet.create(
             shadowColor:'skyblue',
             paddingBottom:'15%',
             shadowOpacity: 1,
-            shadowRadius: 7,
+            shadowRadius: 15,
         },
         
         image:{
             height: 250,
             width:300,
             alignSelf:'center',
-            flex:2,
-            marginBottom:10,
+            flex: 2,
+            marginBottom: 10,
+            marginRight: 10,
+            marginLeft:2.5,
             borderWidth:2,
-            marginLeft:10,
             borderColor:'skyblue',
-            borderRadius:'20%'
+            borderRadius:20
         },
 
         text:{

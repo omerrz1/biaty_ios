@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   languages: {
     borderWidth: 1,
     marginBottom: "3%",
-    borderRadius: "20%",
+    borderRadius: 20,
     borderColor: "skyblue",
     backgroundColor: "skyblue",
     alignSelf: "center",
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "skyblue",
     padding: 3,
-    borderRadius: "20%",
+    borderRadius: 20,
     flex: 1,
     height: 200,
     width: "95%",
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 2,
     borderColor: "skyblue",
-    borderRadius: "5%",
+    borderRadius: 5,
     margin: 5,
   },
   try: {
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "10%",
+    borderRadius: 10,
     marginTop: "13%",
   },
 });

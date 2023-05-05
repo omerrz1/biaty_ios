@@ -11,12 +11,13 @@ import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomePage } from "./home";
 import { Verify_otp } from "./OTP";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { HouseDetails } from "./houseDetails";
 import { Ionicons } from "@expo/vector-icons";
 import { Profile } from "../screens/profile";
 import { MyHouses } from "./MyHouses";
 import { UserDetails } from "./userDetails";
 import { ChangePassword } from "./changePasswod";
+import { HouseCard } from "../components/houseCard";
 
 function search_icon({ focused }) {
   return (
@@ -176,6 +177,30 @@ export function GuestNavigation(props) {
   );
 }
 
+
+// user details navigation
+export function House_details_nav() {
+  const { Navigator, Screen } = createStackNavigator();
+  return (
+    <Navigator>
+      <Screen
+        name="home"
+        component={HomePage}
+        options={{ headerShown: false, gesturesEnabled: false }}
+      />
+       <Screen
+        name="home-card"
+        component={HouseCard}
+        options={{ headerShown: false, gesturesEnabled: false }}
+      />
+      <Screen
+        name="details"
+        component={HouseDetails}
+        options={{ headerShown: false,}}
+      />
+    </Navigator>
+  )
+}
 //user navigation
 export function UserNavigation(props) {
   const { Navigator, Screen } = createBottomTabNavigator();
@@ -187,8 +212,8 @@ export function UserNavigation(props) {
       }}
     >
       <Screen
-        name="home"
-        component={HomePage}
+        name="home-nav"
+        component={House_details_nav}
         options={{ headerShown: false, tabBarIcon: home_page_icon }}
       />
       <Screen

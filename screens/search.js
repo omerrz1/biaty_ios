@@ -49,7 +49,7 @@ export function HouseSearch(props) {
             />
             <MaterialCommunityIcons
               name="home-search-outline"
-              size={"55%"}
+              size={50}
               color="black"
             />
           </View>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: "80%",
     height: "50%",
-    borderRadius: "30%",
+    borderRadius: 20,
     paddingLeft: 10,
     paddingRight: 10,
     marginRight: 5,

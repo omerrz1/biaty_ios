@@ -1,12 +1,15 @@
 import { View,StyleSheet,Text, ScrollView, ImageBackground, Tex, Image,FlatList } from "react-native";
-import { Entypo,FontAwesome5,Foundation,MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo,FontAwesome5,FontAwesome,Foundation,SimpleLineIcons,MaterialCommunityIcons } from "@expo/vector-icons";
+import { useState } from "react";
 
 
 
 export function HouseDetails(props) {
 
-
-    let house = {"address": "Final house", "area": 234432, "bath_rooms": 200, "bed_rooms": 1, "contact": 906608504, "description": "What is Lorem Ipsumwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "id": 49, "key": "49", "living_rooms": 1, "owner": "عمر", "photos": [{"house": 49, "key": "9", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"},{"house": 49, "key": "8", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"},{"house": 49, "key": "7", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"}], "price": 2423, "public": true, "rent": true, "sell": false}
+    const [house, set_house] = useState(props.route.params.houses)
+    // mockk house data 
+    // let house = {"address": "Final house", "area": 234432, "bath_rooms": 200, "bed_rooms": 1, "contact": 906608504, "description": "What is Lorem Ipsumwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "id": 49, "key": "49", "living_rooms": 1, "owner": "عمر", "photos": [{"house": 49, "key": "9", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"},{"house": 49, "key": "8", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"},{"house": 49, "key": "7", "photo": "https://www.baity.uk/media/media/image_LlI7PMK.JPEG"}], "price": 2423, "public": true, "rent": true, "sell": false}
+    set_house(props.route.params.houses)
     let photos = house.photos
     let new_photos_list = []
     for (let photo of photos) {
@@ -16,6 +19,7 @@ export function HouseDetails(props) {
         <View style={styles.container}>
             <ImageBackground style={styles.background} source={require('../assets/homeBG.png')} >
                 <ScrollView>
+                    <View style={{paddingBottom:200}}>
                 <View style={styles.images_container}>
                             <FlatList
                                 data={house.photos}
@@ -49,9 +53,22 @@ export function HouseDetails(props) {
                     </View>
 
                     <View style={styles.description}>
-                        <Foundation color='skyblue' name="comment-quotes" size={45} />
+                        <Foundation color='skyblue' name="comment-quotes" size={45}/>
                         <Text style={{marginTop:20,fontSize:20}}>{ house.description}</Text>
-                    </View>
+                        </View>
+                        {/* oenr dtesil */}
+                        <View style={styles.owner}>
+                            <FontAwesome5 name="house-user" style={{ marginBottom: 20, marginTop: 10 }} size={40} color="skyblue"/>
+                            <View style={{ flexDirection: 'row', paddingBottom:20,marginBottom: 10, width: 200, justifyContent: 'space-between', alignItems: 'center', borderBottomWidth:1}}>
+                                <FontAwesome5 name="user-alt" size={20} color="skyblue"/>
+                                <Text style={{fontSize:15, fontWeight:'bold'}}>{house.owner}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', marginBottom: 30, width: 200,justifyContent :'space-between', alignItems:'center'}}>
+                                <FontAwesome name="phone" size={24} color="skyblue" />
+                                <Text style={{fontSize:15, fontWeight:'bold'}}>{house.contact}</Text>
+                        </View>                    
+                        </View>
+                        </View>
                     </ScrollView>
             </ImageBackground>
         </View>
@@ -62,6 +79,7 @@ export function HouseDetails(props) {
 
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         width: '100%',
@@ -152,6 +170,21 @@ const styles = StyleSheet.create({
     number: {
         fontSize: 25,
         fontWeight: 'bold',
+    },
+    owner: {
+        alignSelf: 'center',
+        width: '90%',
+        alignItems: 'center',
+        marginTop: 50,
+        borderWidth: 1,
+        borderColor: 'skyblue',
+        backgroundColor: 'white',
+        shadowColor:'skyblue',
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 1,
+        shadowRadius:15,
+        borderRadius: 15,
+        padding:10
     }
 
 })

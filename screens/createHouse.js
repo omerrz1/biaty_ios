@@ -107,6 +107,7 @@ export function HouseIMages(props) {
       <View style={styles.container}>
         <View style={styles.images_list}>
           <FlatList
+            style={{width:'100%'}}
             data={selectedImages}
             showsVerticalScrollIndicator={false}
             alwaysBounceVertical={false}
@@ -161,6 +162,7 @@ export function HouseForm(props) {
   const [loading, set_loading] = useState('none')
   const [add_photos_Button, set_add_photos_Button] = useState('visible')
   const [place_holder_color, set_place_holder_color] = useState('grey')
+  const [house_status, set_house_status] = useState('rent')
 
   const options = [
     { label: t("Rent"), value: "rent" },
@@ -178,6 +180,7 @@ export function HouseForm(props) {
     house.append("bath_rooms", bath_rooms);
     house.append("bed_rooms", bed_rooms);
     house.append("public", true);
+    house.append('status',house_status)
 
     const ep = "https://www.baity.uk/house/create/";
     AsyncStorage.getItem("token").then(create_houes);
@@ -213,9 +216,10 @@ export function HouseForm(props) {
       style={styles.background}
     >
       <KeyboardAwareScrollView
-        style={{ paddingTop: "40%" }}
+        style={{ width:'100%',paddingTop: 167 }}
         bounces={true}
-        extraScrollHeight={400}
+        extraScrollHeight={100}
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.container2}>
           <Text>POST HOUSE</Text>
@@ -337,7 +341,7 @@ export function HouseForm(props) {
             <SwitchSelector
               options={options}
                 initial={0}
-                onPress={value => console.log(`Call onPress with value: ${value}`)}
+                onPress={set_house_status}
                 textColor='black'
                 selectedColor='white'
                 buttonColor='skyblue'
@@ -387,8 +391,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderWidth: 2,
     padding: 20,
-    marginLeft: 15,
-    marginRight: 15,
+    width: '93%',
+    alignSelf:'center',
     borderRadius: 18,
     borderColor: "skyblue",
     backgroundColor: "white",
@@ -396,6 +400,7 @@ const styles = StyleSheet.create({
     shadowColor: "skyblue",
     shadowRadius: 10,
     shadowOpacity: 1,
+    marginBottom:'90%'
   },
   image_button_box: {
     width: "30%",
@@ -407,14 +412,14 @@ const styles = StyleSheet.create({
     bottom: 10,
     height: "70%",
     borderColor: "skyblue",
-    borderRadius: "35%",
+    borderRadius: 20,
     marginBottom: "5%",
     alignItems: "center",
     justifyContent: "center",
     shadowOffset: { height: 1, width: 1 },
     shadowColor: "skyblue",
     shadowRadius: 10,
-    borderRadius: "10%",
+    borderRadius: 10,
     shadowOpacity: 1,
   },
   image: {
@@ -427,7 +432,7 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 1, width: 1 },
     backgroundColor: "white",
     shadowRadius: 10,
-    borderRadius: "10%",
+    borderRadius: 10,
     shadowOpacity: 1,
   },
   input: {
@@ -477,7 +482,7 @@ const styles = StyleSheet.create({
     color: "skyblue",
     fontWeight: "800",
     width: "100%",
-    left: "5%",
+    left: "8%",
     marginLeft: "8%",
   },
   header_icon: {

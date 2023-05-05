@@ -238,16 +238,16 @@ export function UserDetails(props) {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => setUp_modal(true)}>
             <View style={styles.section}>
-              <Feather size="20" name="edit" />
-              <AntDesign size="20" name="user" />
+              <Feather size={20} name="edit" />
+              <AntDesign size={20} name="user" />
               <View style={{ ...styles.input, alignItems: "center" }}>
                 <Text>{data.username}</Text>
               </View>
             </View>
 
             <View style={styles.section}>
-              <Feather size="20" name="edit" />
-              <SimpleLineIcons size="20" name="phone" />
+              <Feather size={20} name="edit" />
+              <SimpleLineIcons size={20} name="phone" />
               <View style={{ ...styles.input, alignItems: "center" }}>
                 <Text>{data.phone}</Text>
               </View>
@@ -269,7 +269,7 @@ export function UserDetails(props) {
             onPress={() => set_confirm_email_modal(true)}
             style={styles.section}
           >
-            <Feather size="20" name="edit" />
+            <Feather size={20} name="edit" />
             <MaterialCommunityIcons
               name="email-outline"
               size={24}
@@ -295,7 +295,7 @@ export function UserDetails(props) {
             onPress={change_password}
             style={{ ...styles.section, marginBottom: "80%" }}
           >
-            <Feather size="20" name="edit" />
+            <Feather size={20} name="edit" />
             <SimpleLineIcons name="lock" size={24} color="black" />
             <View style={{ ...styles.input, alignItems: "center" }}>
               <Text>****************</Text>
@@ -328,7 +328,7 @@ export function UserDetails(props) {
                 color="black"
               />
               <View style={styles.section}>
-                <AntDesign size="30" name="user" />
+                <AntDesign size={30} name="user" />
                 <TextInput
                   value={username}
                   onChangeText={setUsername}
@@ -337,7 +337,7 @@ export function UserDetails(props) {
                 />
               </View>
               <View style={styles.section}>
-                <SimpleLineIcons size="20" name="phone" />
+                <SimpleLineIcons size={20} name="phone" />
                 <TextInput
                   textAlign="center"
                   onChangeText={setPhone}
@@ -353,7 +353,7 @@ export function UserDetails(props) {
                   alignItems: "center",
                   justifyContent: "center",
                   backgroundColor: "skyblue",
-                  borderRadius: "20%",
+                  borderRadius: 20,
                   marginTop: "20%",
                 }}
               >
@@ -427,7 +427,7 @@ export function UserDetails(props) {
                   alignItems: "center",
                 }}
               >
-                <Feather size="60" name="edit" />
+                <Feather size={60} name="edit" />
 
                 <Text
                   style={{
@@ -440,7 +440,7 @@ export function UserDetails(props) {
                   {email_label}
                 </Text>
                 <View style={{ ...styles.section, marginTop: "20%" }}>
-                  <AntDesign size="30" name="mail" />
+                  <AntDesign size={30} name="mail" />
                   <TextInput
                     placeholder=" new email@example.com"
                     placeholderTextColor='black'
@@ -457,7 +457,7 @@ export function UserDetails(props) {
                     width: "30%",
                     alignItems: "center",
                     justifyContent: "center",
-                    borderRadius: "10%",
+                    borderRadius: 20,
                   }}
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
@@ -473,7 +473,7 @@ export function UserDetails(props) {
                     alignItems: "center",
                     marginTop:'5%',
                     justifyContent: "center",
-                    borderRadius: "10%",
+                    borderRadius: 20,
                   }}
                 >
                   <Text style={{ color: "white", fontWeight: "bold" }}>
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: "10%",
   },
-  otp_content: {
+  otp_content:{
     flex: 0.8,
     justifyContent: "center",
     alignItems: "center",
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     borderWidth: 6,
     borderColor: "skyblue",
     marginHorizontal: "5%",
-    borderRadius: "10%",
+    borderRadius: 20,
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 1,
     shadowColor: "skyblue",
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     top: "10%",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "20%",
+    borderRadius: 20,
     borderColor: "skyblue",
     shadowOffset: { height: 0, width: 0 },
     shadowColor: "skyblue",
@@ -631,7 +631,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: "3%",
-    borderRadius: "10%",
+    borderRadius: 20,
   },
   section: {
     flexDirection: "row",
@@ -651,7 +651,7 @@ const styles = StyleSheet.create({
     width: "35%",
     height: "20%",
     marginLeft: "15%",
-    borderRadius: "20%",
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: "10%",
@@ -665,7 +665,7 @@ const styles = StyleSheet.create({
     height: "50%",
     borderColor: "skyblue",
     borderWidth: 1,
-    borderRadius: "20%",
+    borderRadius: 20,
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 1,
     shadowColor: "skyblue",
@@ -693,7 +693,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     borderColor: "hotpink",
     borderWidth: 2,
-    borderRadius: "10%",
+    borderRadius: 20,
     shadowOffset: { height: 0, width: 0 },
     shadowColor: "grey",
     shadowRadius: 10,

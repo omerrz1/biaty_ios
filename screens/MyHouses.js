@@ -12,16 +12,17 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MyHouseCard } from "../components/houseCard";
 import {
-  AntDesign,
   Ionicons,
   Foundation,
   Entypo,
   MaterialCommunityIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import NumericInput from "react-native-numeric-input";
 import { StackActions } from "@react-navigation/native";
 import { useState } from "react";
+import SwitchSelector from "react-native-switch-selector";
 
 export function MyHouses(props) {
   // states
@@ -41,7 +42,13 @@ export function MyHouses(props) {
   const [Bedrooms, setBedrooms] = useState();
   const [Public, setPublic] = useState();
   const [Livingrooms, setLivingrooms] = useState();
-
+  const [house_status, set_house_status] = useState('rent')
+  const {t} = useTranslation()
+  const options = [
+      { label: t("Rent"), value: "rent" },
+      { label: t("Sell"), value: "sell" },
+  ];
+  
   // functions
   function Delete_house(id) {
     console.log(id);
@@ -59,6 +66,7 @@ export function MyHouses(props) {
     house.append("bath_rooms", Bathrooms);
     house.append("bed_rooms", Bedrooms);
     house.append("public", Public);
+    house.append('status', house_status);
 
     console.log("house edited : ", house);
     const endPoint = `https://www.baity.uk/house/update/${id}/`;
@@ -92,6 +100,7 @@ export function MyHouses(props) {
     setBathrooms(House.bath_rooms);
     setLivingrooms(House.living_rooms);
     setHouseID(House.id);
+    set_house_status(House.status)
     setshowEditHouseModal(true);
   }
 
@@ -123,6 +132,9 @@ export function MyHouses(props) {
     props.navigation.dispatch(StackActions.pop());
     props.navigation.dispatch(StackActions.replace("profileScreen"));
   }
+
+
+
 
   return (
     <ImageBackground
@@ -233,7 +245,7 @@ export function MyHouses(props) {
               />
             </View>
             <View style={styles.numbers}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={styles.room_section}>
                 <FontAwesome5 style={styles.iconStyle} name="bath" size={30} />
                 <View style={styles.NumericInputStyle}>
                   <NumericInput
@@ -250,7 +262,7 @@ export function MyHouses(props) {
                 </View>
               </View>
 
-              <View style={{ flexDirection: "row" }}>
+              <View style={styles.room_section}>
                 <FontAwesome5 style={styles.iconStyle} name="bed" size={30} />
                 <View style={styles.NumericInputStyle}>
                   <NumericInput
@@ -267,7 +279,7 @@ export function MyHouses(props) {
                 </View>
               </View>
 
-              <View style={{ flexDirection: "row" }}>
+              <View style={styles.room_section}>
                 <MaterialCommunityIcons
                   style={styles.iconStyle}
                   name="sofa"
@@ -288,10 +300,23 @@ export function MyHouses(props) {
                 </View>
               </View>
             </View>
+
+            <View style={{width:'80%'}}>
+            <SwitchSelector
+              options={options}
+                initial={house_status=='rent'?0:1}
+                onPress={set_house_status}
+                textColor='black'
+                selectedColor='white'
+                buttonColor='skyblue'
+                borderColor='skyblue'
+            />
+            </View>
             <View
               style={{
                 flexDirection: "row",
                 marginBottom: "10%",
+                marginTop:20,
                 width: "60%",
                 justifyContent: "space-around",
                 alignItems: "center",
@@ -350,7 +375,6 @@ const styles = StyleSheet.create({
     top: "50%",
     marginLeft: "10%",
     marginRight: "10%",
-    justifyContent: "space-around",
     borderWidth: 1,
     borderRadius: 20,
     borderColor: "skyblue",
@@ -425,15 +449,21 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   numbers: {
-    flex: 0.5,
+    height:200,
     flexDirection: "column",
+    width: '50%',
+    alignSelf:'center',
+    alignItems: 'center',
     justifyContent: "space-around",
   },
-  NumericInputStyle: {
-    left: "90%",
+  room_section: {
+    width:'100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'space-between'
   },
   iconStyle: {
-    right: "70%",
+
     color: "skyblue",
   },
   editButton: {
@@ -443,5 +473,6 @@ const styles = StyleSheet.create({
     width: "40%",
     alignItems: "center",
     backgroundColor: "skyblue",
+    marginBottom:25,
   },
 });
