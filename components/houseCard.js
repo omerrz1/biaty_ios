@@ -75,8 +75,7 @@ export function MyHouseCard(props) {
                 </ScrollView>
                 </View>
 
-            
-            <TouchableOpacity>
+
             <View style={{top:5, padding:15,alignItems:'center', alignSelf:'center'}}>
                 <View style={{flexDirection:'row',alignItems:'center', justifyContent:'center'}}>
                     <Entypo style={{marginTop:10}} size={25} name = 'location'/>
@@ -99,7 +98,7 @@ export function MyHouseCard(props) {
                     <Text style={styles.text} > {props.house.living_rooms}</Text>
                 </View>
             </View>
-            </TouchableOpacity>
+
            
                     <View style={styles.options}>
                         <TouchableOpacity onPress={()=>props.OnEdit(props.house)} style={styles.editButton}>
@@ -128,16 +127,16 @@ export function MyHouseCard(props) {
 const styles = StyleSheet.create(
     {
         card_container:{
-            paddingTop:'2%',
+            paddingTop:'3%',
             marginBottom:'15%',
             width:310,
             borderWidth: 3,
-            flex:1,
+            flex: 1,
+            alignSelf:'center',
             alignItems:'center',
             justifyContent:'flex-start',
             borderColor: 'skyblue',
             borderRadius: '25%',
-            height:'100%',
             backgroundColor: 'white',
             shadowOffset:{height:1, width:1},
             shadowColor:'skyblue',
@@ -179,7 +178,8 @@ const styles = StyleSheet.create(
             flexDirection:"row",
             alignItems:'center',
             justifyContent:'space-between',
-            marginTop:'10%',
+            marginTop: 10,
+            marginBottom:10,
             width:'100%',
             paddingLeft:'15%',
             paddingRight:'15%'

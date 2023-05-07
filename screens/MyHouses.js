@@ -11,6 +11,7 @@ import {
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MyHouseCard } from "../components/houseCard";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   Ionicons,
   Foundation,
@@ -152,14 +153,12 @@ export function MyHouses(props) {
             size={30}
             color="skyblue"
           />
-          <Text style={{ color: "skyblue", fontWeight: "bold" }}>profile</Text>
+          <Text style={{ color: "skyblue", fontWeight:"bold"}}>profile</Text>
         </TouchableOpacity>
         <FlatList
-          style={{ padding: "3%", alignSelf: "center" }}
+          style={{width:'100%',alignSelf: "center",}}
+          ListFooterComponent={<View style={{ height: 200 }} />}
           data={houses}
-          // keyExtractor={
-          //     (item)=>item.id.toString()
-          // }
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <MyHouseCard
@@ -201,6 +200,13 @@ export function MyHouses(props) {
           resizeMode="cover"
           source={require("../assets/homeBG.png")}
         >
+           <KeyboardAwareScrollView
+        style={{ width:'100%'}}
+        bounces={true}
+        extraScrollHeight={100}
+        showsVerticalScrollIndicator={false}
+      >
+          
           <View style={styles.modalStyle}>
             <View style={styles.input_container}>
               <Entypo style={{ marginTop: 10 }} size={25} name="location" />
@@ -341,7 +347,8 @@ export function MyHouses(props) {
               <Text style={{ color: "white", fontWeight: "bold" }}>SAVE</Text>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+          </KeyboardAwareScrollView>
+          </ImageBackground>
       </Modal>
     </ImageBackground>
   );
@@ -350,14 +357,12 @@ export function MyHouses(props) {
 const styles = StyleSheet.create({
   backgruond: {
     flex: 1,
-    alignSelf: "center",
     width: "100%",
   },
   container: {
     flex: 1,
-    paddingTop: "27%",
     width: "100%",
-    paddingBottom: "20%",
+    paddingTop:90
   },
   backbuttoncontainer: {
     position: "absolute",
@@ -369,22 +374,23 @@ const styles = StyleSheet.create({
   },
   modalcontainer: {
     backgroundColor: "white",
-    height: "25%",
+    height: 200,
     alignItems: "center",
     justifyContent: "center",
-    top: "50%",
+    top: "30%",
     marginLeft: "10%",
     marginRight: "10%",
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: "skyblue",
+    borderColor: "hotpink",
     shadowOffset: { height: 1, width: 1 },
-    shadowColor: "black",
+    shadowColor: "hotpink",
     shadowRadius: 10,
-    shadowOpacity: 0.7,
+    shadowOpacity: 1,
   },
   options: {
     flexDirection: "row",
+    marginTop:'10%',
     justifyContent: "space-around",
     width: "100%",
   },
@@ -417,7 +423,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    top: "15%",
+    top: "5%",
+    paddingTop:'25%',
     borderColor: "skyblue",
     shadowOffset: { height: 0, width: 0 },
     shadowColor: "cornflowerblue",
@@ -426,11 +433,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   modalStyle: {
-    flex: 1,
     width: "100%",
-    top: "13%",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: 'center',
+    justifyContent:'center'
   },
   input_container: {
     width: "80%",

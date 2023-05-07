@@ -20,7 +20,8 @@ AsyncStorage.getItem('language')
     let options={
         resources:resources,
         fallbacklang:'en',
-        lng:lan,
+        lng: lan,
+        compatibilityJSON: 'v3',
         interpolation :{
             escapeValue : false,
         }

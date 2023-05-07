@@ -31,7 +31,6 @@ export function UserDetails(props) {
   const [delete_confrim, setdelete_confrim] = useState(false);
   const [username, setUsername] = useState();
   const [phone, setPhone] = useState();
-  const [password, setPassword] = useState();
   const [id, setId] = useState();
   const [themecolor, setThemeColor] = useState("black");
   const [message, setMessage] = useState(t("start_message"));
@@ -42,20 +41,19 @@ export function UserDetails(props) {
   const [otp_modal, setOtpModal] = useState(false);
   const [email_message, set_email_message] = useState("none");
   const [email_label, set_email_label] = useState();
-
+  
   // use effect
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => setToken(token));
   });
   useEffect(() => {
+
     setEmail(data.email);
     setPhone(data.phone.toString());
     setUsername(data.username);
     setId(data.id);
   }, [data]);
 
-  //check
-  console.log("id is ", data.id, "token :", user_token);
 
   // functions
   // ------------general -------------
@@ -293,7 +291,7 @@ export function UserDetails(props) {
 
           <TouchableOpacity
             onPress={change_password}
-            style={{ ...styles.section, marginBottom: "80%" }}
+            style={{ ...styles.section, marginBottom: "35%" }}
           >
             <Feather size={20} name="edit" />
             <SimpleLineIcons name="lock" size={24} color="black" />
@@ -526,21 +524,21 @@ export function UserDetails(props) {
             <Text style={{ marginHorizontal: "5%", marginTop: "10%" }}>
               {t("delete_message")}
             </Text>
-            <View style={styles.email_options}>
+            <View style={styles.del_options}>
+            <TouchableOpacity
+                onPress={delete_me}
+                style={{ ...styles.button, backgroundColor: "hotpink" }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>
+                  {t("confirm")}
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setdelete_confrim(false)}
                 style={{ ...styles.button, backgroundColor: "skyblue" }}
               >
                 <Text style={{ fontWeight: "bold", color: "white" }}>
                   {t("cancel_message")}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={delete_me}
-                style={{ ...styles.button, backgroundColor: "hotpink" }}
-              >
-                <Text style={{ fontWeight: "bold", color: "white" }}>
-                  {t("confirm")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -550,8 +548,6 @@ export function UserDetails(props) {
     </ImageBackground>
   );
 }
-// update email modal
-// delete account
 
 const styles = StyleSheet.create({
   background: {
@@ -699,4 +695,10 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 1,
   },
+  del_options: {
+    flexDirection: 'row',
+    marginTop: 25,
+    width: 200,
+    justifyContent:'space-between'
+  }
 });

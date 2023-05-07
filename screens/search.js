@@ -56,7 +56,7 @@ export function HouseSearch(props) {
         </TouchableWithoutFeedback>
         <View style={{ flex: 5, width: "100%" }}>
           <FlatList
-            style={{ padding: "3%", alignSelf: "center" }}
+            style={{ padding: "3%",width:'100%',alignSelf: "center" }}
             data={houses}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => <HouseCard house={item} />}

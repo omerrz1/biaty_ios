@@ -8,8 +8,8 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
-  FlatList,
 } from "react-native";
+import { Loading } from "../components/loading";
 import {
   AntDesign,
   FontAwesome,
@@ -34,6 +34,7 @@ export function Profile(props) {
   const [token, setToken] = useState();
   const [button_visible, setButton_visible] = useState("none");
   const [preview_list, set_preview_list] = useState([]);
+  const [loaded , set_loaded] = useState(false)
   const languages = [
     { key: "ar", value: "اللغة العربية" },
     { key: "en", value: "english" },
@@ -65,10 +66,13 @@ export function Profile(props) {
     Setusername(data.username);
     Setemail(data.email);
     Setphone(data.phone);
-    // here we will then make the button visible
-    setButton_visible("visible");
+    if (data.id) {
+      set_loaded(true)
+    }
+
   }
   function get_profile(token) {
+    set_loaded(false)
     // not needed
     const end_point = "https://www.baity.uk/owners/profile/";
     fetch(end_point, {
@@ -110,7 +114,7 @@ export function Profile(props) {
   }, [token]);
 
   // for houses
-  useEffect(get_houses, [token]);
+  useEffect(()=>get_houses(), [token]);
   return (
     <ImageBackground
       style={styles.background}
@@ -121,7 +125,7 @@ export function Profile(props) {
           <RefreshControl
             onRefresh={() => {
               get_houses();
-              get_profile(token);
+              get_profile(token)
             }}
           />
         }
@@ -155,9 +159,11 @@ export function Profile(props) {
               <Text style={styles.Text}>{phone}</Text>
             </View>
           </View>
+          {/* loading animation */}
+          <View style={{height:90, marginTop:10, display:loaded?'none':'visible'}}><Loading height={50} /></View>
           <TouchableOpacity
             onPress={go_to_details}
-            style={{ ...styles.button, display: data ? "visible" : "none" }}
+            style={{ ...styles.button, display:loaded?'visible':'none'}}
           >
             <Text style={{ color: "white", fontWeight: "bold" }}>
               {t("edit_profile")}
