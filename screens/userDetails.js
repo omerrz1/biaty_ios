@@ -41,17 +41,29 @@ export function UserDetails(props) {
   const [otp_modal, setOtpModal] = useState(false);
   const [email_message, set_email_message] = useState("none");
   const [email_label, set_email_label] = useState();
-  
+  // display states 
+  const [data_username, set_data_username] = useState('Loading')
+  const [data_phone, set_data_phone] = useState('Loading')
+  const [data_email, set_data_email] = useState('Loading')
   // use effect
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => setToken(token));
   });
   useEffect(() => {
-
+    try {
+    // display data
+    set_data_email(data.email)
+    set_data_phone(data.phone)
+    set_data_username(data.username)
+    // data used for sendning https requests
     setEmail(data.email);
     setPhone(data.phone.toString());
     setUsername(data.username);
-    setId(data.id);
+    setId(data.id);  
+    } catch (e){
+      console.log('this is he error',e)
+    }
+    
   }, [data]);
 
 
@@ -239,7 +251,7 @@ export function UserDetails(props) {
               <Feather size={20} name="edit" />
               <AntDesign size={20} name="user" />
               <View style={{ ...styles.input, alignItems: "center" }}>
-                <Text>{data.username}</Text>
+                <Text>{data_username}</Text>
               </View>
             </View>
 
@@ -247,7 +259,7 @@ export function UserDetails(props) {
               <Feather size={20} name="edit" />
               <SimpleLineIcons size={20} name="phone" />
               <View style={{ ...styles.input, alignItems: "center" }}>
-                <Text>{data.phone}</Text>
+                <Text>{data_phone}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -274,7 +286,7 @@ export function UserDetails(props) {
               color="black"
             />
             <View style={{ ...styles.input, alignItems: "center" }}>
-              <Text>{data.email}</Text>
+              <Text>{data_email}</Text>
             </View>
           </TouchableOpacity>
 

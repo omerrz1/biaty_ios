@@ -65,7 +65,7 @@ export const arabic = {
     livingrooms: "غرف المعيشة",
     bedrooms: "غرف نوم",
     add_photos: 'إضافة صور المنزل',
-    Rent:'للايجار',
-    Sell:'للبيع',
+    rent:'للايجار',
+    sell:'للبيع',
   },
 };

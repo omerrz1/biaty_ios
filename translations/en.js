@@ -66,7 +66,7 @@ export const english = {
     livingrooms: "living rooms",
     bedrooms: "bed rooms",
     add_photos: 'add house photos',
-    Rent: 'rent',
-    Sell:'sell'
+    rent: 'rent',
+    rell:'sell'
   },
 };

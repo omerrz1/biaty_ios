@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
-  Text,
   FlatList,
-  TouchableOpacity,
   RefreshControl,
   View,
+  Modal,
 } from "react-native";
+import { HouseDetails } from "./houseDetails";
 import { HouseCard, MyHouseCard } from "../components/houseCard";
 export function HomePage(props) {
   const [houses, SetHouses] = useState([]);
@@ -18,8 +18,15 @@ export function HomePage(props) {
       .then((data) => SetHouses(data));
   }
 
-  useEffect(get_houses, []);
+  function show_house_modal(item) {
+    set_house(item)
+    set_show_house(true)
+    console.log(item)
+  }
 
+  useEffect(get_houses, []);
+  const [show_house, set_show_house] = useState(false)
+  const [house, set_house] = useState()
   return (
     <ImageBackground
       style={styles.backgrund}
@@ -36,9 +43,13 @@ export function HomePage(props) {
           showsVerticalScrollIndicator={false}
 
           refreshControl={<RefreshControl onRefresh={get_houses} />}
-          renderItem={({ item }) => <HouseCard house={item} />}
+          renderItem={({ item }) => <HouseCard pressed={()=>show_house_modal(item)} house={item} />}
           ListFooterComponent={<View style={{ height: 200 }} />}
         />
+
+        <Modal animationType="slide" transparent={false} visible={show_house}>
+          <HouseDetails back={()=>set_show_house(false)} house={house} />
+        </Modal>
       </View>
     </ImageBackground>
   );

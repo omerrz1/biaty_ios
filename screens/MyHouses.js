@@ -46,8 +46,8 @@ export function MyHouses(props) {
   const [house_status, set_house_status] = useState('rent')
   const {t} = useTranslation()
   const options = [
-      { label: t("Rent"), value: "rent" },
-      { label: t("Sell"), value: "sell" },
+      { label: t("rent"), value: "rent" },
+      { label: t("sell"), value: "sell" },
   ];
   
   // functions

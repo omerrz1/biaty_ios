@@ -25,7 +25,7 @@ export function HouseCard(props){
                 </View>
             </ScrollView>
             {/* {on press we will just print the house object } */}
-            <TouchableOpacity onPress={()=> props.navigation.navigate("details", { house: props.house })} >
+            <TouchableOpacity onPress={props.pressed} >
             <View style={{top:5, padding:15,alignItems:'center', alignSelf:'center'}}>
                 <View style={{flexDirection:'row',alignItems:'center', justifyContent:'center'}}>
                     <Entypo style={{marginTop:10}} size={25} name = 'location'/>
@@ -33,7 +33,11 @@ export function HouseCard(props){
                 </View>
 
                 <View style={{flexDirection:'row', top:'4%', alignItems:'center', justifyContent:'center'}}>
-                    <FontAwesome5 style={{}} size={30} name = 'comment-dollar'/>
+                <View style={{backgroundColor:'black',alignItems:'center',justifyContent:'center', borderRadius:250,width:30,height:30}}>
+            <Text style={{color:"white",fontSize:13,alignSelf:'center'}}>
+              SDG
+            </Text>
+            </View>
                     <Text style={styles.text} >{props.house.price}</Text>
                 </View>
 
@@ -83,7 +87,11 @@ export function MyHouseCard(props) {
                 </View>
 
                 <View style={{flexDirection:'row', top:'4%', alignItems:'center', justifyContent:'center'}}>
-                    <FontAwesome5 style={{}} size={30} name = 'comment-dollar'/>
+                <View style={{backgroundColor:'black',alignItems:'center',justifyContent:'center', borderRadius:250,width:30,height:30}}>
+            <Text style={{color:"white",fontSize:13,alignSelf:'center'}}>
+              SDG
+            </Text>
+            </View>
                     <Text style={styles.text} >{props.house.price}</Text>
                 </View>
 

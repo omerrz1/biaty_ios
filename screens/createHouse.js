@@ -165,8 +165,8 @@ export function HouseForm(props) {
   const [house_status, set_house_status] = useState('rent')
 
   const options = [
-    { label: t("Rent"), value: "rent" },
-    { label: t("Sell"), value: "sell" },
+    { label: t("rent"), value: "rent" },
+    { label: t("sell"), value: "sell" },
   ];
 
   function postHouse() {
@@ -238,12 +238,17 @@ export function HouseForm(props) {
             />
           </View>
 
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
-            <FontAwesome5
+          <View style={{ flexDirection: "row", marginBottom: 20,alignItems:'center' }}>
+            {/* <FontAwesome5
               style={{ marginTop: 10 }}
               size={25}
               name="comment-dollar"
-            />
+            /> */}
+            <View style={{backgroundColor:'black',alignItems:'center',justifyContent:'center', borderRadius:250,width:30,height:30}}>
+            <Text style={{color:"white",fontSize:13,alignSelf:'center'}}>
+              SDG
+            </Text>
+            </View>
             <TextInput
               keyboardType="numeric"
               placeholderTextColor={place_holder_color}
