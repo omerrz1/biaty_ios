@@ -6,14 +6,14 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import '../translations/i18nconfig'
 import { useTranslation } from "react-i18next";
 
-import SwitchSelector from 'react-native-switch-selector';
 
 
 
 export function HouseCard(props){
 
     const {t} = useTranslation()
-
+    const options = { style: 'decimal', useGrouping: true, maximumFractionDigits: 2 };
+    const price = props.house.price.toLocaleString('en-EN', options);
     let photos = props.house.photos
     return(
         <View style={styles.card_container}>
@@ -38,7 +38,7 @@ export function HouseCard(props){
               SDG
             </Text>
             </View>
-                    <Text style={styles.text} >{props.house.price}</Text>
+                    <Text style={styles.text} >{price}</Text>
                 </View>
 
                 <View  style={{flexDirection:'row',top:'8%', alignItems:'center', justifyContent:'center'}}>
@@ -65,7 +65,8 @@ export function HouseCard(props){
 
 export function MyHouseCard(props) {
     
-
+    const options = { style: 'decimal', useGrouping: true, maximumFractionDigits: 2 };
+    const price = props.house.price.toLocaleString('en-EN', options);
     let photos = props.house.photos
     return(
         <View style={styles.card_container}>
@@ -92,7 +93,7 @@ export function MyHouseCard(props) {
               SDG
             </Text>
             </View>
-                    <Text style={styles.text} >{props.house.price}</Text>
+                    <Text style={styles.text} >{price}</Text>
                 </View>
 
                 <View  style={{flexDirection:'row',top:'8%', alignItems:'center', justifyContent:'center'}}>

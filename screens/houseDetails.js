@@ -12,7 +12,12 @@ export function HouseDetails(props) {
     const {t} = useTranslation()
     for (let photo of photos) {
         new_photos_list.push(photo.photo)
-    }
+    }   
+
+    const options = { style: 'decimal', useGrouping: true, maximumFractionDigits: 2 };
+    const house_area = house.area.toLocaleString('en-EN', options);
+    const house_price = house.price.toLocaleString('en-EN', options);
+    // Returns "12,34,567.89" (formatted in the Indian format)
     return (
         <View style={styles.container}>
        
@@ -33,11 +38,21 @@ export function HouseDetails(props) {
                     </View>
                     <View style={styles.address}>
                         <Entypo color='skyblue' style={{ marginTop: 10 }} size={35} name="location" />
-                        <Text style={styles.text}>
-                            {house.address}
+                        <Text style={{...styles.text,fontWeight:'bold'}}>
+                                {house.address}
                         </Text>
 
-                    </View>
+                        </View>
+
+                        <View style={styles.address}>
+                        <FontAwesome5 name="ruler-combined" size={24} color="skyblue" />
+                        <Text style={{...styles.text,fontWeight:'bold'}}>
+                                {house_area}
+                        </Text>
+                        <Text style={styles.text}>
+                                {t('square')}
+                        </Text>
+                        </View>
 
                         <View style={styles.rooms}>
 
@@ -67,7 +82,7 @@ export function HouseDetails(props) {
                         </Text>
                             </View>
                             <Text style={{fontWeight:'bold'}}>
-                            {house.price}
+                            {house_price}
                          </Text>
                         </View>
                        

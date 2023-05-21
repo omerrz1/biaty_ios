@@ -66,6 +66,7 @@ export const arabic = {
     bedrooms: "غرف نوم",
     add_photos: 'إضافة صور المنزل',
     rent:'للايجار',
-    sell:'للبيع',
+    sell: 'للبيع',
+    square:'متر مربع'
   },
 };
