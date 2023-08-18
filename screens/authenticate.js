@@ -38,18 +38,18 @@ export function Auth(props) {
   const [message, setmessage] = useState();
   const [visisbilty, setVisibilty] = useState("none");
   const [loading, setloading] = useState('none')
-  const [login_button_visiblity, set_login_button_visiblity] = useState('visible')
+  const [login_button_visiblity, set_login_button_visiblity] = useState('flex')
 
 
   function handle_response(response) {
-    set_login_button_visiblity('visible')
+    set_login_button_visiblity('flex')
     setloading('none')
     if (response.non_field_errors) {
       //if we get error message
       // we display it in read
       console.log(response);
       setmessage(t("failed_login_message"));
-      setVisibilty("visible");
+      setVisibilty("flex");
     } else if (response.token) {
       setVisibilty("none");
       console.log(response.token);
@@ -67,7 +67,7 @@ export function Auth(props) {
     payload.append("username", username);
     payload.append("password", password);
     set_login_button_visiblity('none')
-    setloading('visible')
+    setloading('flex')
     const ep = "https://www.baity.uk/auth/";
     fetch(ep, {
       method: "POST",

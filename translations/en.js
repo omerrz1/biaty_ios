@@ -18,6 +18,7 @@ export const english = {
       "Account created successfully, please login using your new login details",
     stronger_password:
       "Please use a stronger password that contains numbers, uppercase and lowercase letters",
+    please_complete_form:'please complete this form',
 
     //card component
     view_more: "press here for more details",

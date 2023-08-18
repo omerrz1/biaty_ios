@@ -15,25 +15,26 @@ import "../translations/i18nconfig";
 import { useTranslation } from "react-i18next";
 import { StackActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { Loading } from "../components/loading";
 export function Createuser(props) {
   const { t } = useTranslation();
 
   //values
-  const [username, setUsername] = useState();
-  const [email, setemail] = useState();
-  const [phone, setphone] = useState();
-  const [password, setPassword] = useState();
-
+  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
+  const [phone, setphone] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setloading] = useState(false)
   //messages
-  const [username_message, setUsername_message] = useState();
-  const [email_message, setEmailMessage] = useState();
-  const [phone_message, setPhone_message] = useState();
-  const [password_message, setPassword_message] = useState();
+  const [username_message, setUsername_message] = useState('');
+  const [display_form,set_display_form] = useState('none')
+  const [email_message, setEmailMessage] = useState('');
+  const [phone_message, setPhone_message] = useState('');
+  const [password_message, setPassword_message] = useState('');
 
   //visibility
 
-  const [login_message_visible, setlogin_message_visible] = useState("visible");
+  const [login_message_visible, setlogin_message_visible] = useState("flex");
   const [username_message_visibility, setUsername_message_visibility] =
     useState("none");
   const [email_message_visibility, set_EmailMessage_visibility] =
@@ -50,19 +51,20 @@ export function Createuser(props) {
     if (status == 400) {
       if (data.username) {
         setUsername_message(data.username);
-        setUsername_message_visibility("visible");
+        setUsername_message_visibility("flex");
       }
       if (data.email) {
         setEmailMessage(data.email);
-        set_EmailMessage_visibility("visible");
+        set_EmailMessage_visibility("flex");
       }
       if (data.phone) {
         setPhone_message(data.phone);
-        setPhone_message_visibility("visible");
+        setPhone_message_visibility("flex");
       }
+    setloading(false)
     } else if (status == 201) {
       setlogin_message_visible("none");
-
+      setloading(false)
       //remove other messages
       setUsername_message_visibility("none");
       set_EmailMessage_visibility("none");
@@ -121,16 +123,27 @@ export function Createuser(props) {
         })
         .then(handle_data);
     } else {
+      setloading(false)
       setPassword_message(t("stronger_password"));
-      setPassword_message_visibility("visible");
+      setPassword_message_visibility("felex");
     }
   }
   //data validation
   function create_owner() {
+    setloading(true)
+    if (email!=''){
+      set_display_form('none')
     setPhone_message_visibility("none");
     setUsername_message_visibility("none");
     set_EmailMessage_visibility("none");
     validate_password(password);
+    }
+
+    else{
+      setloading(false)
+      set_display_form('flex')
+    }
+    
   }
 
   function go_to_login() {
@@ -161,8 +174,11 @@ export function Createuser(props) {
 
         <View style={styles.container}>
           <Text>{t("create_account_title")}</Text>
+          
+          <Text style ={{color:'red',display:display_form}}>{t("please_complete_form")}</Text>
+
           <View style={styles.input_container}>
-            <AntDesign size="20" name="user" />
+            <AntDesign size={20} name="user" />
             <TextInput
               style={styles.input}
               onChangeText={setUsername}
@@ -175,7 +191,7 @@ export function Createuser(props) {
           </Text>
 
           <View style={styles.input_container}>
-            <AntDesign size="20" name="mail" />
+            <AntDesign size={20} name="mail" />
             <TextInput
               onChangeText={setemail}
               style={styles.input}
@@ -188,7 +204,7 @@ export function Createuser(props) {
           </Text>
 
           <View style={styles.input_container}>
-            <Feather size="20" name="phone" />
+            <Feather size={20} name="phone" />
             <TextInput
               onChangeText={setphone}
               keyboardType="numeric"
@@ -202,7 +218,7 @@ export function Createuser(props) {
           </Text>
 
           <View style={styles.input_container}>
-            <AntDesign size="20" name="lock" />
+            <AntDesign size={20} name="lock" />
             <TextInput
               onChangeText={setPassword}
               secureTextEntry={true}
@@ -214,9 +230,10 @@ export function Createuser(props) {
           <Text style={{ display: password_message_visibility, color: "red" }}>
             {password_message}
           </Text>
+          <View style={{display:loading?'flex':'none',height:'10%'}}><Loading height={20} /></View>
           <TouchableOpacity
             onPress={create_owner}
-            style={{ display: login_message_visible, ...styles.button }}
+            style={{ display: login_message_visible, ...styles.button,display: loading? 'none':'flex'}}
           >
             <Text style={styles.text}>{t("join_button_text")}</Text>
           </TouchableOpacity>
@@ -266,13 +283,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginTop: "15%",
     color: "skyblue",
-    fontWeight: "800",
+    fontWeight: 800,
     marginLeft: "8%",
+    left:'3%',
   },
   header_icon: {
     position: "absolute",
     marginTop: "13%",
-    fontWeight: "800",
+    fontWeight: 800,
   },
   text: {
     color: "white",
@@ -294,4 +312,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "60%",
   },
+
 });
