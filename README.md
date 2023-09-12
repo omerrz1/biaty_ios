@@ -9,7 +9,7 @@
     - "https://www.baity.uk/owners/create/" ("GET") not allowed to create an account 
         - required data {username:your name , phone:your phone, email: your email, password:password}
      
-    10+ more api endpoints to manage security authentication and CRUD operations for users and the houses can be found here : https://www.baity.uk
+    10+ more api endpoints to manage security authentication and CRUD operations for users and the houses can be found here : https://www.baity.uk/docs/
 
 ## run the app localy 
 ## you need to install node.js and expo
