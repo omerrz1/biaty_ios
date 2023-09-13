@@ -25,4 +25,4 @@ to install all packages
 ## press 'i'
 
 
-![Alt Text](./screenshots/img1.png)
+![screen shots](./screenshots/img1.PNG)
