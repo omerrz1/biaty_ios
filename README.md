@@ -1,4 +1,5 @@
 ## youtube link to see the app https://youtu.be/2MiP_2mbvXg
+![screen shots](./screenshots/img1.PNG)
 - this app is fully done and ready for production
 - the app was not released due to war outbreake in sudan 
 - war in sudan made everyone leave their houses and over 7 million people are now homless or displaced 
@@ -25,4 +26,3 @@ to install all packages
 ## press 'i'
 
 
-![screen shots](./screenshots/img1.PNG)
