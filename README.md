@@ -1,4 +1,4 @@
-## My website https://www.imomer.net
+
 ## youtube link to see the app https://youtu.be/2MiP_2mbvXg
 ![screen shots](./screenshots/img1.PNG)
 - this app is fully done and ready for production
